@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>간단 WebM CCTV 뷰어</title>
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 10px;
+    }
+    video {
+      width: 80%;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: black;
+    }
+    select, button {
+      padding: 6px 12px;
+      background: #222;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎥 WebM RTSP CCTV 뷰어</h2>
+
+  <div>
+    <select id="camSelect">
+      <option value="0">CAM1</option>
+      <option value="1">CAM2</option>
+      <option value="2">CAM3</option>
+      <option value="3">CAM4</option>
+      <option value="4">CAM5</option>
+      <option value="5">CAM6</option>
+    </select>
+    <button id="btnPlay">재생</button>
+  </div>
+
+  <video id="video" autoplay muted playsinline controls style="width:512px;height:288px"></video>
+
+  <script>
+    const video = document.getElementById("video");
+    const sel = document.getElementById("camSelect");
+    const btn = document.getElementById("btnPlay");
+
+    function playStream() {
+      const cam = sel.value;
+      const src = `http://localhost:38887/live?cam=${cam}`;
+      console.log("▶️ 재생:", src);
+      video.src = src;
+    }
+
+    btn.addEventListener("click", playStream);
+    window.onload = playStream;
+  </script>
+</body>
+</html>
